@@ -1,0 +1,5 @@
+C:/Users/Equipo 4/Documents/Unity/VuforiaProject/.utmp/RelWithDebInfo/1r613j5b/armeabi-v7a/CMakeFiles/edit_cache.dir
+C:/Users/Equipo 4/Documents/Unity/VuforiaProject/.utmp/RelWithDebInfo/1r613j5b/armeabi-v7a/CMakeFiles/rebuild_cache.dir
+C:/Users/Equipo 4/Documents/Unity/VuforiaProject/.utmp/RelWithDebInfo/1r613j5b/armeabi-v7a/GameActivity/CMakeFiles/game.dir
+C:/Users/Equipo 4/Documents/Unity/VuforiaProject/.utmp/RelWithDebInfo/1r613j5b/armeabi-v7a/GameActivity/CMakeFiles/edit_cache.dir
+C:/Users/Equipo 4/Documents/Unity/VuforiaProject/.utmp/RelWithDebInfo/1r613j5b/armeabi-v7a/GameActivity/CMakeFiles/rebuild_cache.dir
