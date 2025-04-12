@@ -18,11 +18,13 @@ public class BattleManager : MonoBehaviour
     public UnityEvent onBattleStart;
     [SerializeField]
     private UnityEvent onBattleStop;
+    [SerializeField]
+    private UnityEvent onBattleEnd;
+    [SerializeField]
+    private UnityEvent<string> onFighterWins;
     private int currentFighterIndex = 0;
     private bool isBattleActive = false;
-
     private Coroutine attackCoroutine;
-
     public void AddFighter(Fighter fighter)
     {
         fighters.Add(fighter);
@@ -59,7 +61,10 @@ public class BattleManager : MonoBehaviour
 
     private IEnumerator Attack()
     {
-
+        if (!isBattleActive)
+        {
+            yield break;
+        }
         currentFighterIndex = Random.Range(0, fighters.Count);
         Fighter attacker = fighters[currentFighterIndex];
         Fighter defender;
@@ -69,19 +74,30 @@ public class BattleManager : MonoBehaviour
             defender = fighters[currentFighterIndex];
         } while (attacker == defender);
 
+        attacker.transform.LookAt(defender.transform.position);
+        defender.transform.LookAt(attacker.transform.position);
+
         attacker.Attack();
+        yield return new WaitForSeconds(attacker.AttackDuration);
         float damage = attacker.GetDamage();
         defender.GetComponent<Health>().TakeDamage(damage);
 
         yield return new WaitForSeconds(secondsBetweenAttacks);
         if (defender.GetComponent<Health>().CurrentHealth > 0)
         {
-            StartCoroutine(Attack());
+            attackCoroutine = StartCoroutine(Attack());
         }
         else
         {
-            StopBattle();
+            BattleFinish(attacker.FighterName);
         }
+    }
+
+    private void BattleFinish(string winnerName)
+    {
+        StopBattle();
+        onBattleEnd?.Invoke();
+        onFighterWins?.Invoke(winnerName);
     }
 
     private void StopBattle()
@@ -92,10 +108,6 @@ public class BattleManager : MonoBehaviour
             StopCoroutine(attackCoroutine);
             attackCoroutine = null;
         }
-        StopCoroutine(attackCoroutine);
         onBattleStop?.Invoke();
-
     }
 }
-
-
